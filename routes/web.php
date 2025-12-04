@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\GenerateController;
 use App\Http\Controllers\PendaftaranController;
+use App\Http\Controllers\QRVerificationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,6 +45,21 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/sk/{id}', [ConfirmController::class, 'sk']);
     Route::post('/generate-sewaktu', [FileController::class, 'createFileSewaktu'])->name('createFileSewaktu');
     Route::post('/generate-mandiri', [FileController::class, 'createFileMandiri'])->name('createFileMandiri');
+
+    // QR Management Routes for TUK
+    Route::get('/tuk-qr-codes', [ConfirmController::class, 'getTukQRCodes'])->name('tuk_qr_codes');
+    Route::post('/store-qr-code', [ConfirmController::class, 'storeQRCode'])->name('store_qr_code');
+    Route::post('/embed-qr/{uuid}', [ConfirmController::class, 'embedQRCode'])->name('embed_qr_code');
+    Route::delete('/delete-qr/{uuid}', [ConfirmController::class, 'deleteQRCode'])->name('delete_qr_code');
+});
+
+// QR Verification Routes (Public Access)
+Route::group(['middleware' => ['web']], function () {
+    // QR verification endpoints
+    Route::get('/qr/{uuid}', [QRVerificationController::class, 'scanResult']);
+    Route::get('/qr-scan/{uuid}', [QRVerificationController::class, 'scanResult']);
+    Route::get('/qr-verify', [QRVerificationController::class, 'index']);
+    Route::post('/qr-verify', [QRVerificationController::class, 'processManual']);
 });
 
 Route::get('/', [FileController::class, 'index']);

@@ -11,9 +11,17 @@ use Illuminate\Support\Facades\Storage;
 use mikehaertl\pdftk\Pdf;
 use Ramsey\Uuid\Uuid;
 use setasign\Fpdi\Tcpdf\Fpdi;
+use App\Services\QRService;
 
 class ConfirmController extends Controller
 {
+    protected $qrService;
+
+    public function __construct(QRService $qrService)
+    {
+        $this->qrService = $qrService;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -46,8 +54,13 @@ class ConfirmController extends Controller
 
     public function confirmTuk($id)
     {
-        $ketuaTuk = (string) Uuid::uuid4();
-        
+        // Get logged-in ketua TUK user
+        $ketuaTukUser = Auth::user();
+
+        if (!$ketuaTukUser || $ketuaTukUser->role !== 'ketua_tuk') {
+            return back()->with('error', 'Akses ditolak. Hanya Ketua TUK yang dapat mengkonfirmasi.');
+        }
+
         $verification = Verification::where('id', $id)->first();
         $url = $this->publicPath('tuk/' . \Carbon\Carbon::parse($verification->created_at)->format('Y-m-d') . '/' . strtoupper($verification->tuk) . '/' . $verification->link);
         $file = file_get_contents( $url);
@@ -100,13 +113,11 @@ class ConfirmController extends Controller
             $signaturePage = $pageCount - 1;
         }
 
-        DB::connection('reguler')->table('barcodes')->insert([
-            'nama' => $verification->ketua_tuk,
-            'id_izin' => $verification->ketua_tuk,
-            'jabatan' => 'Ketua TUK',
-            'url' => 'https://barcode.lspgatensi.id/' . $ketuaTuk,
-            'created_at' => $verification->created_at
-        ]);
+        // Generate QR code for ketua TUK
+        $qrResultKetuaTuk = $this->qrService->generateQRForUser($verification, 'ketua_tuk', $ketuaTukUser);
+        $qrUrlKetuaTuk = $qrResultKetuaTuk['url'];
+
+        // QR data automatically saved to qr_codes table by QRService
 
         // Iterate through each page of the original PDF
         for ($i = 1; $i <= $pageCount; $i++) {
@@ -119,16 +130,16 @@ class ConfirmController extends Controller
 
             if ($i === ($signaturePage - $portofolioCount - 3) && $isBothMethod) {
                 if ($verification->jenis_tuk === 'Mandiri') {
-                    $fpdi->write2DBarcode('https://barcode.lspgatensi.id/' . $ketuaTuk, 'QRCODE,H', 35, 180, 20, 20);
+                    $fpdi->write2DBarcode($qrUrlKetuaTuk, 'QRCODE,H', 35, 180, 20, 20);
                 } else {
-                    $fpdi->write2DBarcode('https://barcode.lspgatensi.id/' . $ketuaTuk, 'QRCODE,H', 52, 180, 20, 20);
+                    $fpdi->write2DBarcode($qrUrlKetuaTuk, 'QRCODE,H', 52, 180, 20, 20);
                 }
             }
             if ($i === $signaturePage - 1) {
                 if ($verification->jenis_tuk === 'Mandiri') {
-                    $fpdi->write2DBarcode('https://barcode.lspgatensi.id/' . $ketuaTuk, 'QRCODE,H', 35, 180, 20, 20);
+                    $fpdi->write2DBarcode($qrUrlKetuaTuk, 'QRCODE,H', 35, 180, 20, 20);
                 } else {
-                    $fpdi->write2DBarcode('https://barcode.lspgatensi.id/' . $ketuaTuk, 'QRCODE,H', 52, 180, 20, 20);
+                    $fpdi->write2DBarcode($qrUrlKetuaTuk, 'QRCODE,H', 52, 180, 20, 20);
                 }
             }
         }
@@ -169,16 +180,16 @@ class ConfirmController extends Controller
 
             if ($index === ($paperlessCount - $portofolioCount - 2) && $isBothMethod) {
                 if ($verification->jenis_tuk === 'Mandiri') {
-                    $fpdiPaperless->write2DBarcode('https://barcode.lspgatensi.id/' . $ketuaTuk, 'QRCODE,H', 35, 180, 20, 20);
+                    $fpdiPaperless->write2DBarcode($qrUrlKetuaTuk, 'QRCODE,H', 35, 180, 20, 20);
                 } else {
-                    $fpdiPaperless->write2DBarcode('https://barcode.lspgatensi.id/' . $ketuaTuk, 'QRCODE,H', 52, 180, 20, 20);
+                    $fpdiPaperless->write2DBarcode($qrUrlKetuaTuk, 'QRCODE,H', 52, 180, 20, 20);
                 }
             }
             if ($index === $paperlessCount) {
                 if ($verification->jenis_tuk === 'Mandiri') {
-                    $fpdiPaperless->write2DBarcode('https://barcode.lspgatensi.id/' . $ketuaTuk, 'QRCODE,H', 35, 180, 20, 20);
+                    $fpdiPaperless->write2DBarcode($qrUrlKetuaTuk, 'QRCODE,H', 35, 180, 20, 20);
                 } else {
-                    $fpdiPaperless->write2DBarcode('https://barcode.lspgatensi.id/' . $ketuaTuk, 'QRCODE,H', 52, 180, 20, 20);
+                    $fpdiPaperless->write2DBarcode($qrUrlKetuaTuk, 'QRCODE,H', 52, 180, 20, 20);
                 }
             }
         }
@@ -217,9 +228,13 @@ class ConfirmController extends Controller
 
     public function confirm($id)
     {
-        $direktur_2 = (string) Uuid::uuid4();
-        $direktur_3 = (string) Uuid::uuid4();
-        
+        // Get logged-in direktur user
+        $direkturUser = Auth::user();
+
+        if (!$direkturUser || $direkturUser->role !== 'direktur') {
+            return back()->with('error', 'Akses ditolak. Hanya direktur yang dapat mengkonfirmasi.');
+        }
+
         $verification = Verification::where('id', $id)->first();
         $url = $this->publicPath('tuk/' . \Carbon\Carbon::parse($verification->created_at)->format('Y-m-d') . '/' . strtoupper($verification->tuk) . '/' . $verification->link);
         $file = file_get_contents($url);
@@ -232,6 +247,12 @@ class ConfirmController extends Controller
             throw new \Exception("Failed to fetch the PDF from the URL");
         }
 
+        // Generate QR codes once (before processing pages)
+        $qrResult1 = $this->qrService->generateQRForUser($verification, 'direktur', $direkturUser);
+        $qrUrl1 = $qrResult1['url'];
+
+        // QR data automatically saved to qr_codes table by QRService
+
         // Store the file in a temporary location
         $tempFpdiPath = tempnam(sys_get_temp_dir(), 'pdf');
         file_put_contents($tempFpdiPath, $file);
@@ -242,7 +263,7 @@ class ConfirmController extends Controller
         // Set document information (Optional)
         $fpdi->SetCreator('LSP LPK Gataksindo');
         $fpdi->SetAuthor('LSP LPK Gataksindo');
-        
+
         // Load the existing PDF
         $pageCount = $fpdi->setSourceFile($tempFpdiPath);
         if ($verification->jenis_tuk === 'Mandiri') {
@@ -261,30 +282,17 @@ class ConfirmController extends Controller
             $fpdi->useTemplate($templateId);
 
             if($i === 1) {
-                DB::connection('reguler')->table('barcodes')->insert([
-                    'nama' => 'Radinal Efendy, S.T.',
-                    'id_izin' => '2220910001',
-                    'jabatan' => 'Direktur LSP',
-                    'url' => 'https://barcode.lspgatensi.id/' . $direktur_2,
-                    'created_at' => $verification->created_at
-                ]);
-                $fpdi->write2DBarcode('https://barcode.lspgatensi.id/' . $direktur_2, 'QRCODE,H', 30, 224, 20, 20);
+                $fpdi->write2DBarcode($qrUrl1, 'QRCODE,H', 30, 224, 20, 20);
             }
             if (($i === 2 && $verification->filetype === '2') || ($i === 2 && $verification->jenis_tuk === 'Mandiri')) {
-                $fpdi->write2DBarcode('https://barcode.lspgatensi.id/' . $direktur_2, 'QRCODE,H', 30, 240, 20, 20);
+                $fpdi->write2DBarcode($qrUrl1, 'QRCODE,H', 30, 240, 20, 20);
             }
             if ($i === 3 && $verification->filetype === '1') {
-                $fpdi->write2DBarcode('https://barcode.lspgatensi.id/' . $direktur_2, 'QRCODE,H', 30, 49, 20, 20);
+                $fpdi->write2DBarcode($qrUrl1, 'QRCODE,H', 30, 49, 20, 20);
             }
             if ($i === $signaturePage) {
-                DB::connection('reguler')->table('barcodes')->insert([
-                    'nama' => 'Radinal Efendy, S.T.',
-                    'id_izin' => '2220910001',
-                    'jabatan' => 'Direktur LSP',
-                    'url' => 'https://barcode.lspgatensi.id/' . $direktur_3,
-                    'created_at' => $currentDate
-                ]);
-                $fpdi->write2DBarcode('https://barcode.lspgatensi.id/' . $direktur_3, 'QRCODE,H', 30, 254, 20, 20);
+                // Use the same QR code for final director signature
+                $fpdi->write2DBarcode($qrUrl1, 'QRCODE,H', 30, 254, 20, 20);
             }
         }
 
@@ -299,6 +307,9 @@ class ConfirmController extends Controller
             throw new \Exception("Failed to save the verification file to storage.");
         }
 
+        // Use the same QR code for paperless processing
+        $qrUrlPaperless = $qrUrl1;
+
         // Store the file in a temporary location
         $tempPaperlessPath = tempnam(sys_get_temp_dir(), 'pdf');
         file_put_contents($tempPaperlessPath, $file_paperless);
@@ -309,7 +320,7 @@ class ConfirmController extends Controller
         // Set document information (Optional)
         $fpdiPaperless->SetCreator('LSP LPK Gataksindo');
         $fpdiPaperless->SetAuthor('LSP LPK Gataksindo');
-        
+
         // Load the existing PDF
         $paperlessCount = $fpdiPaperless->setSourceFile($tempPaperlessPath);
 
@@ -323,13 +334,13 @@ class ConfirmController extends Controller
             $fpdiPaperless->useTemplate($templatePaperless);
 
             if($index === 1) {
-                $fpdiPaperless->write2DBarcode('https://barcode.lspgatensi.id/' . $direktur_2, 'QRCODE,H', 30, 224, 20, 20);
+                $fpdiPaperless->write2DBarcode($qrUrlPaperless, 'QRCODE,H', 30, 224, 20, 20);
             }
             if (($index === 2 && $verification->filetype === '2') || ($index === 2 && $verification->jenis_tuk === 'Mandiri')) {
-                $fpdiPaperless->write2DBarcode('https://barcode.lspgatensi.id/' . $direktur_2, 'QRCODE,H', 30, 240, 20, 20);
+                $fpdiPaperless->write2DBarcode($qrUrlPaperless, 'QRCODE,H', 30, 240, 20, 20);
             }
             if ($index === 3 && $verification->filetype === '1') {
-                $fpdiPaperless->write2DBarcode('https://barcode.lspgatensi.id/' . $direktur_2, 'QRCODE,H', 30, 49, 20, 20);
+                $fpdiPaperless->write2DBarcode($qrUrlPaperless, 'QRCODE,H', 30, 49, 20, 20);
             }
         }
 

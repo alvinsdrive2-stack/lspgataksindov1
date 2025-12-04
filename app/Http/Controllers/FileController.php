@@ -10,11 +10,18 @@ use App\Models\Verification;
 use ZipArchive;
 use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Uuid;
+use App\Services\QRService;
 
 ini_set('max_execution_time', 3800);
 
 class FileController extends Controller
 {
+    protected $qrService;
+
+    public function __construct(QRService $qrService)
+    {
+        $this->qrService = $qrService;
+    }
 
     private function publicPath(string $path): string
 {
@@ -71,8 +78,6 @@ class FileController extends Controller
 
     public function verify(Request $request)
     {
-        $barcodeVerifikator1 = (string) Uuid::uuid4();
-
         $verification = Verification::where('id', $request->id)->first();
 
         $verifikator1 = DB::connection("mygatensi")->table("myasesorbnsp")->select('Noreg')->where('Nama', $verification->verificator)->first();
@@ -200,13 +205,10 @@ class FileController extends Controller
             $fpdi->Rect(0, 0, 210, 10, 'F');
             $fpdi->useTemplate($templateId);
                         if ($i === 3 && $verification->jenis_tuk === 'Mandiri') {
-                DB::connection('reguler')->table('barcodes')->insert([
-                    'nama' => $verification->verificator,
-                    'id_izin' => $verifikator1->Noreg,
-                    'jabatan' => 'Verifikator 1',
-                    'url' => 'https://barcode.lspgatensi.id/' . $barcodeVerifikator1,
-                    'created_at' => $verification->created_at
-                ]);
+                // Generate QR otomatis dengan QRService
+                $qrVerifikatorMandiri = $this->qrService->generateQR($verification, 'verifikator1');
+
+                // QR data automatically saved to qr_codes table by QRService
                 if ($isSesuai === true) {
                     $fpdi->SetFont('cambriab', 'B', 15.5);
                     $fpdi->SetXY(129, 148);
@@ -215,17 +217,12 @@ class FileController extends Controller
                     $fpdi->SetFont('cambriab', 'B', 15.5);
                     $fpdi->SetXY(111, 148);
                     $fpdi->Write(0, '------');
-                } 
-                $fpdi->write2DBarcode('https://barcode.lspgatensi.id/' . $barcodeVerifikator1, 'QRCODE,H', 156, 170, 20, 20);
+                }
+                // Gunakan URL otomatis dari QRService (localhost)
+                $fpdi->write2DBarcode($qrVerifikatorMandiri['url'], 'QRCODE,H', 156, 170, 20, 20);
             }
             if ($i === 4 && $verification->filetype === '2' && $verification->jenis_tuk === 'Sewaktu') {
-                DB::connection('reguler')->table('barcodes')->insert([
-                    'nama' => $verification->verificator,
-                    'id_izin' => $verifikator1->Noreg,
-                    'jabatan' => 'Verifikator 1',
-                    'url' => 'https://barcode.lspgatensi.id/' . $barcodeVerifikator1,
-                    'created_at' => $verification->created_at
-                ]);
+                // Database insert handled by QRService automatically
                 if ($isSesuai === true) {
                     $fpdi->SetFont('cambriab', 'B', 15.5);
                     $fpdi->SetXY(174, 24);
@@ -235,16 +232,16 @@ class FileController extends Controller
                     $fpdi->SetXY(157, 24);
                     $fpdi->Write(0, '------');
                 }
-                $fpdi->write2DBarcode('https://barcode.lspgatensi.id/' . $barcodeVerifikator1, 'QRCODE,H', 156, 51, 20, 20);
+                // Generate QR otomatis dengan QRService
+                $qrVerifikator1 = $this->qrService->generateQR($verification, 'verifikator1');
+
+                // QR data automatically saved to qr_codes table by QRService
+
+                // Gunakan URL otomatis dari QRService (localhost)
+                $fpdi->write2DBarcode($qrVerifikator1['url'], 'QRCODE,H', 156, 51, 20, 20);
             }
             if ($i === 4 + $baCount && $verification->filetype === '2' && $verification->jenis_tuk === 'Sewaktu' && $isBothMethod) {
-                DB::connection('reguler')->table('barcodes')->insert([
-                    'nama' => $verification->verificator,
-                    'id_izin' => $verifikator1->Noreg,
-                    'jabatan' => 'Verifikator 1',
-                    'url' => 'https://barcode.lspgatensi.id/' . $barcodeVerifikator1,
-                    'created_at' => $verification->created_at
-                ]);
+                // Database insert handled by QRService automatically
                 if ($isSesuai === true) {
                     $fpdi->SetFont('cambriab', 'B', 15.5);
                     $fpdi->SetXY(174, 24);
@@ -254,35 +251,20 @@ class FileController extends Controller
                     $fpdi->SetXY(157, 24);
                     $fpdi->Write(0, '------');
                 }
-                $fpdi->write2DBarcode('https://barcode.lspgatensi.id/' . $barcodeVerifikator1, 'QRCODE,H', 156, 51, 20, 20);
-            }
-            if ($i === 5 && $verification->filetype === '1' && $verification->jenis_tuk === 'Sewaktu') {
-                DB::connection('reguler')->table('barcodes')->insert([
-                    'nama' => $verification->verificator,
-                    'id_izin' => $verifikator1->Noreg,
-                    'jabatan' => 'Verifikator 1',
-                    'url' => 'https://barcode.lspgatensi.id/' . $barcodeVerifikator1,
-                    'created_at' => $verification->created_at
-                ]);
-                if ($isSesuai === true) {
-                    $fpdi->SetFont('cambriab', 'B', 15.5);
-                    $fpdi->SetXY(174, 24);
-                    $fpdi->Write(0, '----------');
-                } else {
-                    $fpdi->SetFont('cambriab', 'B', 15.5);
-                    $fpdi->SetXY(157, 24);
-                    $fpdi->Write(0, '------');
-                }
-                $fpdi->write2DBarcode('https://barcode.lspgatensi.id/' . $barcodeVerifikator1, 'QRCODE,H', 156, 51, 20, 20);
+                // Generate QR otomatis dengan QRService
+                $qrVerifikator1 = $this->qrService->generateQR($verification, 'verifikator1');
+
+                // QR data automatically saved to qr_codes table by QRService
+
+                // Gunakan URL otomatis dari QRService (localhost)
+                $fpdi->write2DBarcode($qrVerifikator1['url'], 'QRCODE,H', 156, 51, 20, 20);
             }
             if ($i === 5 + $baCount && $verification->filetype === '1' && $verification->jenis_tuk === 'Sewaktu' && $isBothMethod) {
-                DB::connection('reguler')->table('barcodes')->insert([
-                    'nama' => $verification->verificator,
-                    'id_izin' => $verifikator1->Noreg,
-                    'jabatan' => 'Verifikator 1',
-                    'url' => 'https://barcode.lspgatensi.id/' . $barcodeVerifikator1,
-                    'created_at' => $verification->created_at
-                ]);
+                // Generate QR otomatis untuk method kedua
+                $qrVerifikator2 = $this->qrService->generateQR($verification, 'verifikator1');
+
+                // QR data automatically saved to qr_codes table by QRService
+
                 if ($isSesuai === true) {
                     $fpdi->SetFont('cambriab', 'B', 15.5);
                     $fpdi->SetXY(174, 24);
@@ -292,7 +274,9 @@ class FileController extends Controller
                     $fpdi->SetXY(157, 24);
                     $fpdi->Write(0, '------');
                 }
-                $fpdi->write2DBarcode('https://barcode.lspgatensi.id/' . $barcodeVerifikator1, 'QRCODE,H', 156, 51, 20, 20);
+
+                // Gunakan URL otomatis dari QRService (localhost)
+                $fpdi->write2DBarcode($qrVerifikator2['url'], 'QRCODE,H', 156, 51, 20, 20);
             }
             // For observasi mandiri
             if ($i >= 5 && $i < 5 + $observasiCount && $verification->jenis_tuk === 'Mandiri') {
@@ -554,7 +538,9 @@ class FileController extends Controller
             }
             if ($i === ($signaturePage - $portofolioCount - 2) && $isBothMethod) {
                 if ($verification->jenis_tuk === 'Mandiri') {
-                    $fpdi->write2DBarcode('https://barcode.lspgatensi.id/' . $barcodeVerifikator1, 'QRCODE,H', 97, 180, 20, 20);
+                    // Generate QR otomatis dengan QRService untuk signature page
+                    $qrSignature = $this->qrService->generateQR($verification, 'verifikator_signature');
+                    $fpdi->write2DBarcode($qrSignature['url'], 'QRCODE,H', 97, 180, 20, 20);
                     if ($isSesuai === true) {
                         $fpdi->SetFont('cambriab', 'B', 15.5);
                         $fpdi->SetXY(78, 76);
@@ -575,7 +561,9 @@ class FileController extends Controller
                         $fpdi->Write(0, "✓");
                     }
                 } else {
-                    $fpdi->write2DBarcode('https://barcode.lspgatensi.id/' . $barcodeVerifikator1, 'QRCODE,H', 132, 180, 20, 20);
+                    // Generate QR otomatis dengan QRService untuk signature page
+                    $qrSignature = $this->qrService->generateQR($verification, 'verifikator_signature');
+                    $fpdi->write2DBarcode($qrSignature['url'], 'QRCODE,H', 132, 180, 20, 20);
                     if ($isSesuai === true) {
                         $fpdi->SetFont('cambriab', 'B', 15.5);
                         $fpdi->SetXY(78, 76);
@@ -599,7 +587,9 @@ class FileController extends Controller
             }
             if ($i === $signaturePage) {
                 if ($verification->jenis_tuk === 'Mandiri') {
-                    $fpdi->write2DBarcode('https://barcode.lspgatensi.id/' . $barcodeVerifikator1, 'QRCODE,H', 97, 180, 20, 20);
+                    // Generate QR otomatis dengan QRService untuk signature page
+                    $qrSignature = $this->qrService->generateQR($verification, 'verifikator_signature');
+                    $fpdi->write2DBarcode($qrSignature['url'], 'QRCODE,H', 97, 180, 20, 20);
                      if ($isSesuai === true) {
                         $fpdi->SetFont('cambriab', 'B', 15.5);
                         $fpdi->SetXY(78, 76);
@@ -620,7 +610,9 @@ class FileController extends Controller
                         $fpdi->Write(0, "✓");
                     }
                 } else {
-                    $fpdi->write2DBarcode('https://barcode.lspgatensi.id/' . $barcodeVerifikator1, 'QRCODE,H', 132, 180, 20, 20);
+                    // Generate QR otomatis dengan QRService untuk signature page
+                    $qrSignature = $this->qrService->generateQR($verification, 'verifikator_signature');
+                    $fpdi->write2DBarcode($qrSignature['url'], 'QRCODE,H', 132, 180, 20, 20);
                     if ($isSesuai === true) {
                         $fpdi->SetFont('cambriab', 'B', 15.5);
                         $fpdi->SetXY(78, 76);
@@ -680,13 +672,7 @@ class FileController extends Controller
             $fpdiPaperless->Rect(0, 0, 210, 10, 'F');
             $fpdiPaperless->useTemplate($templateId);
                         if ($i === 3 && $verification->jenis_tuk === 'Mandiri') {
-                DB::connection('reguler')->table('barcodes')->insert([
-                    'nama' => $verification->verificator,
-                    'id_izin' => $verifikator1->Noreg,
-                    'jabatan' => 'Verifikator 1',
-                    'url' => 'https://barcode.lspgatensi.id/' . $barcodeVerifikator1,
-                    'created_at' => $verification->created_at
-                ]);
+                // Database insert handled by QRService automatically
                 if ($isSesuai === true) {
                     $fpdiPaperless->SetFont('cambriab', 'B', 15.5);
                     $fpdiPaperless->SetXY(129, 148);
@@ -696,16 +682,12 @@ class FileController extends Controller
                     $fpdiPaperless->SetXY(111, 148);
                     $fpdiPaperless->Write(0, '------');
                 } 
-                $fpdiPaperless->write2DBarcode('https://barcode.lspgatensi.id/' . $barcodeVerifikator1, 'QRCODE,H', 156, 170, 20, 20);
+                // Generate QR otomatis dengan QRService untuk paperless signature
+                    $qrPaperlessSignature = $this->qrService->generateQR($verification, 'verifikator_paperless');
+                    $fpdiPaperless->write2DBarcode($qrPaperlessSignature['url'], 'QRCODE,H', 156, 170, 20, 20);
             }
             if ($i === 4 && $verification->filetype === '2' && $verification->jenis_tuk === 'Sewaktu') {
-                DB::connection('reguler')->table('barcodes')->insert([
-                    'nama' => $verification->verificator,
-                    'id_izin' => $verifikator1->Noreg,
-                    'jabatan' => 'Verifikator 1',
-                    'url' => 'https://barcode.lspgatensi.id/' . $barcodeVerifikator1,
-                    'created_at' => $verification->created_at
-                ]);
+                // Database insert handled by QRService automatically
                 if ($isSesuai === true) {
                     $fpdiPaperless->SetFont('cambriab', 'B', 15.5);
                     $fpdiPaperless->SetXY(174, 24);
@@ -715,16 +697,12 @@ class FileController extends Controller
                     $fpdiPaperless->SetXY(157, 24);
                     $fpdiPaperless->Write(0, '------');
                 }
-                $fpdiPaperless->write2DBarcode('https://barcode.lspgatensi.id/' . $barcodeVerifikator1, 'QRCODE,H', 156, 51, 20, 20);
+                // Generate QR otomatis dengan QRService untuk paperless
+                    $qrPaperless = $this->qrService->generateQR($verification, 'verifikator_paperless');
+                    $fpdiPaperless->write2DBarcode($qrPaperless['url'], 'QRCODE,H', 156, 51, 20, 20);
             }
             if ($i === 4 + $baCount && $verification->filetype === '2' && $verification->jenis_tuk === 'Sewaktu' && $isBothMethod) {
-                DB::connection('reguler')->table('barcodes')->insert([
-                    'nama' => $verification->verificator,
-                    'id_izin' => $verifikator1->Noreg,
-                    'jabatan' => 'Verifikator 1',
-                    'url' => 'https://barcode.lspgatensi.id/' . $barcodeVerifikator1,
-                    'created_at' => $verification->created_at
-                ]);
+                // Database insert handled by QRService automatically
                 if ($isSesuai === true) {
                     $fpdiPaperless->SetFont('cambriab', 'B', 15.5);
                     $fpdiPaperless->SetXY(174, 24);
@@ -734,16 +712,12 @@ class FileController extends Controller
                     $fpdiPaperless->SetXY(157, 24);
                     $fpdiPaperless->Write(0, '------');
                 }
-                $fpdiPaperless->write2DBarcode('https://barcode.lspgatensi.id/' . $barcodeVerifikator1, 'QRCODE,H', 156, 51, 20, 20);
+                // Generate QR otomatis dengan QRService untuk paperless
+                    $qrPaperless = $this->qrService->generateQR($verification, 'verifikator_paperless');
+                    $fpdiPaperless->write2DBarcode($qrPaperless['url'], 'QRCODE,H', 156, 51, 20, 20);
             }
             if ($i === 5 && $verification->filetype === '1' && $verification->jenis_tuk === 'Sewaktu') {
-                DB::connection('reguler')->table('barcodes')->insert([
-                    'nama' => $verification->verificator,
-                    'id_izin' => $verifikator1->Noreg,
-                    'jabatan' => 'Verifikator 1',
-                    'url' => 'https://barcode.lspgatensi.id/' . $barcodeVerifikator1,
-                    'created_at' => $verification->created_at
-                ]);
+                // Database insert handled by QRService automatically
                 if ($isSesuai === true) {
                     $fpdiPaperless->SetFont('cambriab', 'B', 15.5);
                     $fpdiPaperless->SetXY(174, 24);
@@ -753,16 +727,12 @@ class FileController extends Controller
                     $fpdiPaperless->SetXY(157, 24);
                     $fpdiPaperless->Write(0, '------');
                 }
-                $fpdiPaperless->write2DBarcode('https://barcode.lspgatensi.id/' . $barcodeVerifikator1, 'QRCODE,H', 156, 51, 20, 20);
+                // Generate QR otomatis dengan QRService untuk paperless
+                    $qrPaperless = $this->qrService->generateQR($verification, 'verifikator_paperless');
+                    $fpdiPaperless->write2DBarcode($qrPaperless['url'], 'QRCODE,H', 156, 51, 20, 20);
             }
             if ($i === 5 + $baCount && $verification->filetype === '1' && $verification->jenis_tuk === 'Sewaktu' && $isBothMethod) {
-                DB::connection('reguler')->table('barcodes')->insert([
-                    'nama' => $verification->verificator,
-                    'id_izin' => $verifikator1->Noreg,
-                    'jabatan' => 'Verifikator 1',
-                    'url' => 'https://barcode.lspgatensi.id/' . $barcodeVerifikator1,
-                    'created_at' => $verification->created_at
-                ]);
+                // Database insert handled by QRService automatically
                 if ($isSesuai === true) {
                     $fpdiPaperless->SetFont('cambriab', 'B', 15.5);
                     $fpdiPaperless->SetXY(174, 24);
@@ -772,7 +742,9 @@ class FileController extends Controller
                     $fpdiPaperless->SetXY(157, 24);
                     $fpdiPaperless->Write(0, '------');
                 }
-                $fpdiPaperless->write2DBarcode('https://barcode.lspgatensi.id/' . $barcodeVerifikator1, 'QRCODE,H', 156, 51, 20, 20);
+                // Generate QR otomatis dengan QRService untuk paperless
+                    $qrPaperless = $this->qrService->generateQR($verification, 'verifikator_paperless');
+                    $fpdiPaperless->write2DBarcode($qrPaperless['url'], 'QRCODE,H', 156, 51, 20, 20);
             }
             // For observasi mandiri
             if ($i >= 5 && $i < 5 + $observasiCount && $verification->jenis_tuk === 'Mandiri') {
@@ -1034,7 +1006,9 @@ class FileController extends Controller
             }
             if ($i === ($paperlessCount - $portofolioCount - 2) && $isBothMethod) {
                 if ($verification->jenis_tuk === 'Mandiri') {
-                    $fpdiPaperless->write2DBarcode('https://barcode.lspgatensi.id/' . $barcodeVerifikator1, 'QRCODE,H', 97, 180, 20, 20);
+                    // Generate QR otomatis dengan QRService untuk paperless signature
+                    $qrPaperlessSignature = $this->qrService->generateQR($verification, 'verifikator_signature');
+                    $fpdiPaperless->write2DBarcode($qrPaperlessSignature['url'], 'QRCODE,H', 97, 180, 20, 20);
                     if ($isSesuai === true) {
                         $fpdiPaperless->SetFont('cambriab', 'B', 15.5);
                         $fpdiPaperless->SetXY(78, 76);
@@ -1055,7 +1029,9 @@ class FileController extends Controller
                         $fpdiPaperless->Write(0, "✓");
                     }
                 } else {
-                    $fpdiPaperless->write2DBarcode('https://barcode.lspgatensi.id/' . $barcodeVerifikator1, 'QRCODE,H', 132, 180, 20, 20);
+                    // Generate QR otomatis dengan QRService untuk paperless signature
+                    $qrPaperlessSignature = $this->qrService->generateQR($verification, 'verifikator_signature');
+                    $fpdiPaperless->write2DBarcode($qrPaperlessSignature['url'], 'QRCODE,H', 132, 180, 20, 20);
                     if ($isSesuai === true) {
                         $fpdiPaperless->SetFont('cambriab', 'B', 15.5);
                         $fpdiPaperless->SetXY(78, 76);
@@ -1079,7 +1055,9 @@ class FileController extends Controller
             }
             if ($i === $paperlessCount) {
                 if ($verification->jenis_tuk === 'Mandiri') {
-                    $fpdiPaperless->write2DBarcode('https://barcode.lspgatensi.id/' . $barcodeVerifikator1, 'QRCODE,H', 97, 180, 20, 20);
+                    // Generate QR otomatis dengan QRService untuk paperless signature
+                    $qrPaperlessSignature = $this->qrService->generateQR($verification, 'verifikator_signature');
+                    $fpdiPaperless->write2DBarcode($qrPaperlessSignature['url'], 'QRCODE,H', 97, 180, 20, 20);
                     if ($isSesuai === true) {
                         $fpdiPaperless->SetFont('cambriab', 'B', 15.5);
                         $fpdiPaperless->SetXY(78, 76);
@@ -1100,7 +1078,9 @@ class FileController extends Controller
                         $fpdiPaperless->Write(0, "✓");
                     }
                 } else {
-                    $fpdiPaperless->write2DBarcode('https://barcode.lspgatensi.id/' . $barcodeVerifikator1, 'QRCODE,H', 132, 180, 20, 20);
+                    // Generate QR otomatis dengan QRService untuk paperless signature
+                    $qrPaperlessSignature = $this->qrService->generateQR($verification, 'verifikator_signature');
+                    $fpdiPaperless->write2DBarcode($qrPaperlessSignature['url'], 'QRCODE,H', 132, 180, 20, 20);
                     if ($isSesuai === true) {
                         $fpdiPaperless->SetFont('cambriab', 'B', 15.5);
                         $fpdiPaperless->SetXY(78, 76);
@@ -1213,20 +1193,19 @@ class FileController extends Controller
             $fpdi->Rect(0, 0, 210, 10, 'F');
             $fpdi->useTemplate($templateId);
                         if ($i === 3 && $verification->jenis_tuk === 'Mandiri') {
-                DB::connection('reguler')->table('barcodes')->insert([
-                    'nama' => $verification->validator,
-                    'id_izin' => $validator->Noreg,
-                    'jabatan' => 'Validator',
-                    'url' => 'https://barcode.lspgatensi.id/' . $barcodeValidator,
-                    'created_at' => $verification->created_at
-                ]);
-                $fpdi->write2DBarcode('https://barcode.lspgatensi.id/' . $barcodeValidator, 'QRCODE,H', 156, 207, 20, 20);
+                // Generate QR otomatis dengan QRService untuk validator
+                $qrValidator = $this->qrService->generateQR($verification, 'validator');
+
+                // QR data automatically saved to qr_codes table by QRService
+                $fpdi->write2DBarcode($qrValidator['url'], 'QRCODE,H', 156, 207, 20, 20);
                 $fpdi->SetFont('cambriab', 'B', 15.5);
                 $fpdi->SetXY(129, 148);
                 $fpdi->Write(0, '----------');
             }
             if ($i === ($signaturePage - $portofolioCount - 2) && $isBothMethod) {
-                $fpdi->write2DBarcode('https://barcode.lspgatensi.id/' . $barcodeValidator, 'QRCODE,H', 161, 180, 20, 20);
+                // Generate QR otomatis dengan QRService untuk validator signature
+                    $qrValidatorSignature = $this->qrService->generateQR($verification, 'validator_signature');
+                    $fpdi->write2DBarcode($qrValidatorSignature['url'], 'QRCODE,H', 161, 180, 20, 20);
                 $fpdi->SetFont('cambriab', 'B', 15.5);
                 $fpdi->SetXY(78, 76);
                 $fpdi->Write(0, '----------');
@@ -1237,7 +1216,9 @@ class FileController extends Controller
                 $fpdi->Write(0, "✓");
             }
             if ($i === $signaturePage) {
-                $fpdi->write2DBarcode('https://barcode.lspgatensi.id/' . $barcodeValidator, 'QRCODE,H', 161, 180, 20, 20);
+                // Generate QR otomatis dengan QRService untuk validator signature
+                    $qrValidatorSignature = $this->qrService->generateQR($verification, 'validator_signature');
+                    $fpdi->write2DBarcode($qrValidatorSignature['url'], 'QRCODE,H', 161, 180, 20, 20);
                 $fpdi->SetFont('cambriab', 'B', 15.5);
                 $fpdi->SetXY(78, 76);
                 $fpdi->Write(0, '----------');
@@ -1283,13 +1264,17 @@ class FileController extends Controller
             $fpdiPaperless->Rect(0, 0, 210, 10, 'F');
             $fpdiPaperless->useTemplate($templateId);
                         if ($i === 3 && $verification->jenis_tuk === 'Mandiri') {
-                $fpdiPaperless->write2DBarcode('https://barcode.lspgatensi.id/' . $barcodeValidator, 'QRCODE,H', 156, 207, 20, 20);
+                // Generate QR otomatis dengan QRService untuk validator
+                    $qrValidator = $this->qrService->generateQR($verification, 'validator');
+                    $fpdiPaperless->write2DBarcode($qrValidator['url'], 'QRCODE,H', 156, 207, 20, 20);
                 $fpdiPaperless->SetFont('cambriab', 'B', 15.5);
                 $fpdiPaperless->SetXY(129, 148);
                 $fpdiPaperless->Write(0, '----------');
             }
             if ($index === ($paperlessCount - $portofolioCount - 2) && $isBothMethod) {
-                $fpdiPaperless->write2DBarcode('https://barcode.lspgatensi.id/' . $barcodeValidator, 'QRCODE,H', 161, 180, 20, 20);
+                // Generate QR otomatis dengan QRService untuk validator signature
+                    $qrValidatorSignature = $this->qrService->generateQR($verification, 'validator_signature');
+                    $fpdiPaperless->write2DBarcode($qrValidatorSignature['url'], 'QRCODE,H', 161, 180, 20, 20);
                 $fpdiPaperless->SetFont('cambriab', 'B', 15.5);
                 $fpdiPaperless->SetXY(78, 76);
                 $fpdiPaperless->Write(0, '----------');
@@ -1300,7 +1285,9 @@ class FileController extends Controller
                 $fpdiPaperless->Write(0, "✓");
             }
             if ($i === $paperlessCount) {
-                $fpdiPaperless->write2DBarcode('https://barcode.lspgatensi.id/' . $barcodeValidator, 'QRCODE,H', 161, 180, 20, 20);
+                // Generate QR otomatis dengan QRService untuk validator signature
+                    $qrValidatorSignature = $this->qrService->generateQR($verification, 'validator_signature');
+                    $fpdiPaperless->write2DBarcode($qrValidatorSignature['url'], 'QRCODE,H', 161, 180, 20, 20);
                 $fpdiPaperless->SetFont('cambriab', 'B', 15.5);
                 $fpdiPaperless->SetXY(78, 76);
                 $fpdiPaperless->Write(0, '----------');
@@ -1395,20 +1382,19 @@ class FileController extends Controller
             $fpdi->Rect(0, 0, 210, 10, 'F');
             $fpdi->useTemplate($templateId);
                         if ($i === 3 && $verification->jenis_tuk === 'Mandiri') {
-                DB::connection('reguler')->table('barcodes')->insert([
-                    'nama' => $verification->validator,
-                    'id_izin' => $validator->Noreg,
-                    'jabatan' => 'Validator',
-                    'url' => 'https://barcode.lspgatensi.id/' . $barcodeValidator,
-                    'created_at' => $verification->created_at
-                ]);
-                $fpdi->write2DBarcode('https://barcode.lspgatensi.id/' . $barcodeValidator, 'QRCODE,H', 156, 207, 20, 20);
+                // Generate QR otomatis dengan QRService untuk validator
+                $qrValidator = $this->qrService->generateQR($verification, 'validator');
+
+                // QR data automatically saved to qr_codes table by QRService
+                $fpdi->write2DBarcode($qrValidator['url'], 'QRCODE,H', 156, 207, 20, 20);
                 $fpdi->SetFont('cambriab', 'B', 15.5);
                 $fpdi->SetXY(112, 148);
                 $fpdi->Write(0, '------');
             }
             if ($i === ($signaturePage - $portofolioCount - 2) && $isBothMethod) {
-                $fpdi->write2DBarcode('https://barcode.lspgatensi.id/' . $barcodeValidator, 'QRCODE,H', 161, 180, 20, 20);
+                // Generate QR otomatis dengan QRService untuk validator signature
+                    $qrValidatorSignature = $this->qrService->generateQR($verification, 'validator_signature');
+                    $fpdi->write2DBarcode($qrValidatorSignature['url'], 'QRCODE,H', 161, 180, 20, 20);
                 $fpdi->SetFont('cambriab', 'B', 15.5);
                 $fpdi->SetXY(63, 76);
                 $fpdi->Write(0, '------');
@@ -1419,7 +1405,9 @@ class FileController extends Controller
                 $fpdi->Write(0, "✓");
             }
             if ($i === $signaturePage) {
-                $fpdi->write2DBarcode('https://barcode.lspgatensi.id/' . $barcodeValidator, 'QRCODE,H', 161, 180, 20, 20);
+                // Generate QR otomatis dengan QRService untuk validator signature
+                    $qrValidatorSignature = $this->qrService->generateQR($verification, 'validator_signature');
+                    $fpdi->write2DBarcode($qrValidatorSignature['url'], 'QRCODE,H', 161, 180, 20, 20);
                 $fpdi->SetFont('cambriab', 'B', 15.5);
                 $fpdi->SetXY(63, 76);
                 $fpdi->Write(0, '------');
@@ -1465,13 +1453,17 @@ class FileController extends Controller
             $fpdiPaperless->Rect(0, 0, 210, 10, 'F');
             $fpdiPaperless->useTemplate($templateId);
                         if ($i === 3 && $verification->jenis_tuk === 'Mandiri') {
-                $fpdiPaperless->write2DBarcode('https://barcode.lspgatensi.id/' . $barcodeValidator, 'QRCODE,H', 156, 207, 20, 20);
+                // Generate QR otomatis dengan QRService untuk validator
+                    $qrValidator = $this->qrService->generateQR($verification, 'validator');
+                    $fpdiPaperless->write2DBarcode($qrValidator['url'], 'QRCODE,H', 156, 207, 20, 20);
                 $fpdiPaperless->SetFont('cambriab', 'B', 15.5);
                 $fpdiPaperless->SetXY(112, 148);
                 $fpdiPaperless->Write(0, '------');
             }
             if ($index === ($paperlessCount - $portofolioCount - 2) && $isBothMethod) {
-                $fpdiPaperless->write2DBarcode('https://barcode.lspgatensi.id/' . $barcodeValidator, 'QRCODE,H', 161, 180, 20, 20);
+                // Generate QR otomatis dengan QRService untuk validator signature
+                    $qrValidatorSignature = $this->qrService->generateQR($verification, 'validator_signature');
+                    $fpdiPaperless->write2DBarcode($qrValidatorSignature['url'], 'QRCODE,H', 161, 180, 20, 20);
                 $fpdiPaperless->SetFont('cambriab', 'B', 15.5);
                 $fpdiPaperless->SetXY(63, 76);
                 $fpdiPaperless->Write(0, '------');
@@ -1482,7 +1474,9 @@ class FileController extends Controller
                 $fpdiPaperless->Write(0, "✓");
             }
             if ($i === $paperlessCount) {
-                $fpdiPaperless->write2DBarcode('https://barcode.lspgatensi.id/' . $barcodeValidator, 'QRCODE,H', 161, 180, 20, 20);
+                // Generate QR otomatis dengan QRService untuk validator signature
+                    $qrValidatorSignature = $this->qrService->generateQR($verification, 'validator_signature');
+                    $fpdiPaperless->write2DBarcode($qrValidatorSignature['url'], 'QRCODE,H', 161, 180, 20, 20);
                 $fpdiPaperless->SetFont('cambriab', 'B', 15.5);
                 $fpdiPaperless->SetXY(63, 76);
                 $fpdiPaperless->Write(0, '------');
@@ -1521,7 +1515,14 @@ class FileController extends Controller
         $allAsesor = DB::connection("mygatensi")->table("myasesorbnsp")->get();
         $allJabker = DB::connection("mygatensi")->table("myjabatankerja")->select(['id_jabatan_kerja', 'jabatan_kerja'])->get();
 
-        return view('file.sewaktu', compact('allJabker', 'allAsesor'));
+        // Ambil data ketua TUK dari users dengan role 'ketua_tuk'
+        $ketuaTukList = DB::table('users')
+                            ->where('role', 'ketua_tuk')
+                            ->whereNotNull('name')
+                            ->orderBy('name')
+                            ->get();
+
+        return view('file.sewaktu', compact('allJabker', 'allAsesor', 'ketuaTukList'));
     }
 
     public function mandiri()

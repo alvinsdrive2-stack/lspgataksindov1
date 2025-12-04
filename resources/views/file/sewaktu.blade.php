@@ -176,7 +176,14 @@
                             <div class="label">
                                 <span class="label-text text-white">Ketua TUK</span>
                             </div>
-                            <input type="text" id="ketua" name="ketua" placeholder="Type here" class="input text-black dark:text-white input-bordered w-full max-w-xs" />
+                            <input list="ketua_tuk" type="text" id="ketua" name="ketua_tuk" placeholder="Ketik nama ketua TUK..." class="input text-black dark:text-white input-bordered w-full max-w-xs" />
+                            <datalist id="ketua_tuk">
+                                @if($ketuaTukList->count() > 0)
+                                    @foreach ($ketuaTukList as $ketua)
+                                        <option value="{{ $ketua->name }}">{{ $ketua->nama_tuk }}</option>
+                                    @endforeach
+                                @endif
+                            </datalist>
                         </label>
                         <label for="asesor" class="form-control w-full max-w-xs">
                             <div class="label">
@@ -312,6 +319,36 @@
                     </label>`;
 
                 container.insertAdjacentHTML('beforeend', newField);
+            });
+
+            // Enhanced autocomplete for ketua TUK
+            const ketuaInput = document.getElementById('ketua');
+            const ketuaDatalist = document.getElementById('ketua_tuk');
+
+            // Set active ketua based on selection
+            ketuaInput.addEventListener('input', function() {
+                const selectedValue = this.value;
+                const options = ketuaDatalist.querySelectorAll('option');
+
+                options.forEach(option => {
+                    if (option.value === selectedValue) {
+                        this.setAttribute('data-tuk-name', option.textContent);
+                    }
+                });
+            });
+
+            // Auto-complete on paste/type
+            ketuaInput.addEventListener('change', function() {
+                if (this.value && !this.getAttribute('data-tuk-name')) {
+                    // Try to find exact match
+                    const options = ketuaDatalist.querySelectorAll('option');
+                    for (let option of options) {
+                        if (option.value.toLowerCase() === this.value.toLowerCase()) {
+                            this.setAttribute('data-tuk-name', option.textContent);
+                            break;
+                        }
+                    }
+                }
             });
         </script>
     </body>
