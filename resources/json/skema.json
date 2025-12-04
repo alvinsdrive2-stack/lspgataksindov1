@@ -1,0 +1,129 @@
+{
+    "myskemabnsp": [
+        {
+            "nama": "KEPALA TUKANG BANGUNAN GEDUNG",
+            "peralatan": "Alat Pertukangan",
+            "spesifikasi": "Cangkul,Sendok Semen,Ember,Benang,Paku,Palu,Lot,Mistar/meteran"
+        },
+        {
+            "nama": "JURU GAMBAR KONSTRUKSI",
+            "peralatan": "",
+            "spesifikasi": "Autocad"
+        },
+        {
+            "nama": "JURU GAMBAR PEMULA KONSTRUKSI",
+            "peralatan": "",
+            "spesifikasi": "Autocad"
+        },
+        {
+            "nama": "KEPALA TUKANG PASANG PERANCAH DAN ACUAN/CETAKAN BETON",
+            "peralatan": "",
+            "spesifikasi": "Frame vertikal,Cross brace,Base plate,Pin/klem pengunci,Waterpass/meteran"
+        },
+        {
+            "nama": "TUKANG PASANG PERANCAH DAN ACUAN/CETAKAN BETON",
+            "peralatan": "",
+            "spesifikasi": "Frame vertikal,Cross brace,Base plate,Pin/klem pengunci,Waterpass/meteran"
+        },
+        {
+            "nama": "TUKANG KAYU KONSTRUKSI",
+            "peralatan": "",
+            "spesifikasi": "Cangkul,Sendok semen,Ember,Benang,Paku,Palu,Lot,Mistar/meteran"
+        },
+        {
+            "nama": "TUKANG PASANG RANGKA BAJA RINGAN",
+            "peralatan": "",
+            "spesifikasi": "Proyektor/LCD/Monitor"
+        },
+        {
+            "nama": "TUKANG PASANG BATA DAN PLESTERAN",
+            "peralatan": "",
+            "spesifikasi": "Sendok semen,Palu,Ember,Meteran,Sekop,Waterpass,Benang,Paku"
+        },
+        {
+            "nama": "TUKANG PASANG UBIN/KERAMIK",
+            "peralatan": "",
+            "spesifikasi": "Sendok semen,Palu,Ember,Meteran,Sekop,Waterpass,Benang,Paku"
+        },
+        {
+            "nama": "TUKANG CAT BANGUNAN GEDUNG",
+            "peralatan": "",
+            "spesifikasi": "Kuas & roller,Papan/baki cat,Tongkat roller,Kape/spatula,Masking tape,Kertas amplas,Penggaris/meteran"
+        },
+        {
+            "nama": "TUKANG BESI BETON",
+            "peralatan": "",
+            "spesifikasi": "Meteran,Besi pembengkok (bending),Alat pemotong tulangan,Gunting kawat,Penyangga tulangan,Kakatua"
+        },
+        {
+            "nama": "TUKANG PASANG WATER PROOFING",
+            "peralatan": "",
+            "spesifikasi": "Roller cat atau kuas besar,Spray gun,Alat pemanas,Trowel atau spatula,Roller atau alat penggulung,Gergaji besi atau pemotong"
+        },
+        {
+            "nama": "TUKANG PASANG PENUTUP ATAP",
+            "peralatan": "",
+            "spesifikasi": "Proyektor/LCD/Monitor"
+        },
+        {
+            "nama": "MANDOR PEKERJAAN TIMBUNAN TUBUH BENDUNGAN TIPE URUGAN",
+            "peralatan": "",
+            "spesifikasi": "Proyektor/LCD/Monitor,Alat Hitung/Kalkulator"
+        },
+        {
+            "nama": "TUKANG PASANG/PERAKIT JEMBATAN RANGKA BAJA PANEL DARURAT ",
+            "peralatan": "",
+            "spesifikasi": "Proyektor/LCD/Monitor"
+        },
+        {
+            "nama": "MANDOR PEMELIHARAAN JALAN ",
+            "peralatan": "",
+            "spesifikasi": "Alat Hitung: Kalkulator"
+        },
+        {
+            "nama": "KEPALA TUKANGPASANG/PERAKIT JEMBATAN RANGKA BAJA PANEL DARURAT",
+            "peralatan": "",
+            "spesifikasi": "Proyektor/LCD/Monitor"
+        },
+        {
+            "nama": "OPERATOR ALAT PENYELIDIKAN TANAH (SOIL INVESTIGATION OPERATOR)",
+            "peralatan": "",
+            "spesifikasi": "Proyektor/LCD/Monitor"
+        },
+        {
+            "nama": "OPERATOR PEMULA ALAT PENYELIDIKAN TANAH (SOIL INVESTIGATION OPERATOR)",
+            "peralatan": "",
+            "spesifikasi": "Proyektor/LCD/Monitor"
+        },
+        {
+            "nama": "APLIKATOR BANGUNAN RISHA (LEVEL 2)",
+            "peralatan": "",
+            "spesifikasi": "Proyektor/LCD/Monitor"
+        },
+        {
+            "nama": "APLIKATOR BANGUNAN RISHA (LEVEL 3)",
+            "peralatan": "",
+            "spesifikasi": "Proyektor/LCD/Monitor"
+        },
+        {
+            "nama": "JURU UKUR KONSTRUKSI",
+            "peralatan": "",
+            "spesifikasi": "Proyektor/LCD/Monitor"
+        },
+        {
+            "nama": " OPERATOR MUDA SURVEI TERESTRIS ",
+            "peralatan": "",
+            "spesifikasi": "Theodolite/Total Station,Meteran,Patok,Waterpass/Digital Level,Kompas"
+        },
+        {
+            "nama": "OPERATOR MADYA SURVEI TERESTRIS",
+            "peralatan": "",
+            "spesifikasi": "Theodolite/Total Station,Meteran,Patok,Waterpass/Digital Level,Kompas"
+        },
+        {
+            "nama": "OPERATOR GROUTING ",
+            "peralatan": "",
+            "spesifikasi": "Proyektor/LCD/Monitor"
+        }
+    ]
+}
