@@ -1511,6 +1511,7 @@ class FileController extends Controller
         $month3 = $monthsIndonesian[$currentDate->format('n')];
         $year3 = $currentDate->format('Y');
         $formattedTanggal3 = "$dayOfWeekIndonesian3 / $day3 $month3 $year3";
+        $formattedTanggal5 = "$dayOfWeekIndonesian3 , $day3 $month3 $year3";
 
         // Tanggal TTD
         $yesterday = (clone $currentDate)->modify('-1 day');
@@ -1579,7 +1580,7 @@ class FileController extends Controller
             'tanggal2' => $formattedTanggal2,
             'tanggal3' => $formattedTanggal3,
             'tanggal4' => $formattedTanggal4,
-            'tanggal5' => $formattedTanggal3,
+            'tanggal5' => $formattedTanggal5,
             'tuk' => $request->tuk,
             'alamat1' => $alamat1,
             'alamat2' => $alamat2,
