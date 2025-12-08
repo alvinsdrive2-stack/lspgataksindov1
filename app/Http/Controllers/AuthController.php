@@ -35,7 +35,9 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
 
-            if ($user->role === 'direktur') {
+            if ($user->role === 'superadmin') {
+                return redirect()->route('users.manage');
+            } else if ($user->role === 'direktur') {
                 return redirect()->route('confirm');
             } else if ($user->role === 'admin_lsp') {
                 return redirect()->route('sewaktu');
@@ -43,6 +45,10 @@ class AuthController extends Controller
                 return redirect()->route('validation');
             } else if ($user->role === 'ketua_tuk') {
                 return redirect()->route('confirm_tuk');
+            } else if ($user->role === 'admin') {
+                return redirect()->route('archive');
+            } else if ($user->role === 'verifikator') {
+                return redirect()->route('verification');
             } else {
                 return redirect()->route('verification');
             }

@@ -6,3 +6,429 @@
 @source "../../storage/framework/views/*.php";
 
 @plugin "daisyui";
+
+/* Custom color scheme for LSP LPK Gataksindo */
+:root {
+  /* Primary Colors */
+  --p: 31 58 115;          /* Primary Blue: #1F3A73 */
+  --pf: 193 39 45;         /* Primary Red (Accent): #C1272D */
+
+  /* Secondary Colors */
+  --s: 63 95 168;          /* Secondary Blue: #3F5FA8 */
+  --sf: 15 26 54;          /* Dark Navy (Strong Text / Headers): #0F1A36 */
+
+  /* Neutral Colors */
+  --n: 51 65 85;           /* Neutral Gray */
+  --nc: 248 250 252;       /* Neutral Content (Slate) */
+  --nf: 30 41 59;          /* Neutral Focus */
+  --b1: 255 255 255;       /* Base 100 (White) */
+  --b2: 248 250 252;       /* Base 200 */
+  --b3: 241 245 249;       /* Base 300 */
+  --bc: 15 23 42;          /* Base Content */
+}
+
+/* Define DaisyUI theme with custom colors */
+[data-theme="light"] {
+  --fallback-p: 31 58 115;
+  --fallback-pc: 31 58 115;
+
+  --fallback-s: 63 95 168;
+  --fallback-sc: 63 95 168;
+
+  --fallback-a: 193 39 45;
+  --fallback-ac: 193 39 45;
+
+  --fallback-n: 51 65 85;
+  --fallback-nc: 248 250 252;
+  --fallback-nf: 30 41 59;
+
+  --fallback-b1: 255 255 255;
+  --fallback-b2: 248 250 252;
+  --fallback-b3: 241 245 249;
+  --fallback-bc: 15 23 42;
+}
+
+/* Additional utility classes for custom colors */
+.bg-primary-dark {
+  background-color: rgb(var(--sf));
+}
+
+.text-primary-dark {
+  color: rgb(var(--sf));
+}
+
+.bg-primary\/10 {
+  background-color: rgb(var(--p) / 0.1);
+}
+
+.bg-primary\/20 {
+  background-color: rgb(var(--p) / 0.2);
+}
+
+.hover\:bg-primary\/80:hover {
+  background-color: rgb(var(--p) / 0.8);
+}
+
+.hover\:text-primary\/80:hover {
+  color: rgb(var(--p) / 0.8);
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--p));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--s));
+}
+
+/* Enhanced animation utilities */
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  animation: ripple 0.6s linear;
+  pointer-events: none;
+}
+
+.animate-slideDown {
+    animation: slideDown 0.5s ease-out;
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.6s ease-out;
+}
+
+.animate-slide-in {
+    animation: slideIn 0.5s ease-out;
+}
+
+.animate-pulse-slow {
+    animation: pulse 3s ease-in-out infinite;
+}
+
+/* Enhanced card hover effects */
+.card-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -15px rgba(31, 58, 115, 0.2);
+}
+
+/* DataTable custom styling */
+.dataTables_wrapper {
+    font-family: inherit;
+    color: #374151 !important; /* Darker gray for better readability */
+}
+
+.dataTables_wrapper .dataTables_filter {
+    color: #374151 !important;
+}
+
+.dataTables_wrapper .dataTables_filter label {
+    color: #374151 !important;
+    font-weight: 500;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    margin-left: 0.5rem;
+    transition: all 0.2s;
+    color: #374151 !important;
+    background-color: white;
+}
+
+.dataTables_wrapper .dataTables_filter input:focus {
+    outline: none;
+    border-color: #1F3A73;
+    box-shadow: 0 0 0 3px rgba(31, 58, 115, 0.1);
+    color: #1F2937 !important;
+}
+
+.dataTables_wrapper .dataTables_length {
+    color: #374151 !important;
+}
+
+.dataTables_wrapper .dataTables_length label {
+    color: #374151 !important;
+    font-weight: 500;
+}
+
+.dataTables_wrapper .dataTables_length select {
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    margin: 0 0.5rem;
+    color: #374151 !important;
+    background-color: white;
+}
+
+.dataTables_wrapper .dataTables_info {
+    color: #374151 !important;
+    font-weight: 500;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    border-radius: 0.375rem;
+    margin: 0 0.125rem;
+    transition: all 0.2s;
+    color: #374151 !important;
+    background-color: white !important;
+    border: 1px solid #e5e7eb !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: linear-gradient(135deg, #4a6bb3, #3F5FA8) !important;
+    color: white !important;
+    border: none !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: linear-gradient(135deg, #3F5FA8, #1F3A73) !important;
+    color: white !important;
+    border: none !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+    color: #9ca3af !important;
+    background-color: #f9fafb !important;
+    border-color: #e5e7eb !important;
+}
+
+/* DataTable headers and text */
+.dataTables_wrapper thead th {
+    color: #1F2937 !important; /* Dark header text */
+    font-weight: 600 !important;
+}
+
+.dataTables_wrapper tbody td {
+    color: #374151 !important; /* Dark body text */
+}
+
+.dataTables_wrapper tbody tr:hover td {
+    color: #1F2937 !important; /* Even darker on hover */
+}
+
+/* Glassmorphism effects */
+.glass {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-dark {
+    background: rgba(31, 58, 115, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(31, 58, 115, 0.2);
+}
+
+/* Enhanced input styling for better visibility */
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="email"],
+select {
+    color: #d3d3d3 !important;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+input[type="email"]:focus,
+select:focus {
+    color: #e7eaee !important;
+}
+
+/* Placeholder text styling */
+input::placeholder,
+textarea::placeholder {
+    color: #9CA3AF !important;
+    opacity: 1;
+}
+
+/* Ensure text visibility on all form inputs */
+.form-control input,
+.form-control select,
+.form-control textarea {
+    color: #374151 !important;
+}
+
+/* Select option styling */
+select option {
+    color: #374151 !important;
+    background-color: white !important;
+}
+
+/* Custom DaisyUI input improvements */
+.custom-input,
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]) {
+    color: #c5c5c5 !important;
+}
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):focus {
+    color: #1F2937 !important;
+}
+
+/* Custom Flatpickr Datepicker Styling */
+.flatpickr-calendar {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 20px 25px -5px rgba(31, 58, 115, 0.1), 0 10px 10px -5px rgba(31, 58, 115, 0.04);
+    border: 1px solid #e5e7eb;
+}
+
+.flatpickr-calendar .flatpickr-month {
+    background: rgb(31, 58, 115);
+    color: white;
+    fill: white;
+    border-radius: 12px 12px 0 0;
+}
+
+.flatpickr-calendar .flatpickr-month .flatpickr-prev-month,
+.flatpickr-calendar .flatpickr-month .flatpickr-next-month {
+    fill: white;
+}
+
+.flatpickr-calendar .flatpickr-month .flatpickr-prev-month:hover,
+.flatpickr-calendar .flatpickr-month .flatpickr-next-month:hover {
+    fill: #1F3A73;
+}
+
+.flatpickr-calendar .flatpickr-current-month .numInputWrapper {
+    background: transparent;
+}
+
+.flatpickr-calendar .flatpickr-current-month .numInputWrapper span.arrowUp:after,
+.flatpickr-calendar .flatpickr-current-month .numInputWrapper span.arrowDown:after {
+    border-bottom-color: white;
+    border-top-color: white;
+}
+
+.flatpickr-calendar .flatpickr-weekdays {
+    background: #f8fafc;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.flatpickr-calendar .flatpickr-weekday {
+    color: #6b7280;
+    font-weight: 600;
+}
+
+.flatpickr-calendar .flatpickr-day {
+    color: #374151;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.flatpickr-calendar .flatpickr-day:hover {
+    background: rgb(31, 58, 115);
+    color: white;
+    border-color: rgb(31, 58, 115);
+}
+
+.flatpickr-calendar .flatpickr-day.selected {
+    background: rgb(31, 58, 115);
+    color: white;
+    border-color: rgb(31, 58, 115);
+}
+
+.flatpickr-calendar .flatpickr-day.today {
+    border-color: #1F3A73;
+}
+
+.flatpickr-calendar .flatpickr-day.today:hover {
+    background: rgb(31, 58, 115);
+    color: white;
+}
+
+.flatpickr-calendar .flatpickr-day.selected.today {
+    background: rgb(31, 58, 115);
+    color: white;
+}
+
+.flatpickr-calendar .flatpickr-day.inRange,
+.flatpickr-calendar .flatpickr-day.inRange:hover {
+    background: rgba(31, 58, 115, 0.1);
+    color: #1F3A73;
+    border-color: transparent;
+}
+
+.flatpickr-calendar .flatpickr-day.startRange,
+.flatpickr-calendar .flatpickr-day.endRange {
+    background: rgb(31, 58, 115);
+    color: white;
+}
+
+.flatpickr-calendar .flatpickr-time {
+    border-top: 1px solid #e5e7eb;
+}
+
+.flatpickr-calendar .flatpickr-time .numInputWrapper {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+}
+
+.flatpickr-calendar .flatpickr-time .numInputWrapper:hover {
+    background: #f8fafc;
+}

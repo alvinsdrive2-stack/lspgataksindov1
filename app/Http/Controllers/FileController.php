@@ -1553,7 +1553,7 @@ class FileController extends Controller
             : '/home/lspgatensi/new-balai/veriftuk';
         
         // ubah pdftk pathnya sesuai dengan lokasi download jika pakai windows dan local
-        $pdftkPath = 'C:/Program Files (x86)/PDFtk Server/bin/pdftk.exe';
+        $pdftkPath = '/snap/bin/pdftk';
 
         if($request->jenisTUK === 'Mandiri') {
             $template = "{$basePath}/app/Http/Controllers/template-mandiri.pdf";
@@ -1608,10 +1608,10 @@ class FileController extends Controller
         }
 
         $result = $pdf->fillForm($formFields)->flatten()->saveAs($outputPath);
-        
-//         if (!$result) {
-//     dd($pdf->getError());
-// }
+
+        if (!$result) {
+            dd('PDFtk Error: ' . $pdf->getError());
+        }
 
         $fpdiContents = file_get_contents($outputPath);
         

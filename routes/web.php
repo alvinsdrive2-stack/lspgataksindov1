@@ -52,6 +52,17 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/store-qr-code', [ConfirmController::class, 'storeQRCode'])->name('store_qr_code');
     Route::post('/embed-qr/{uuid}', [ConfirmController::class, 'embedQRCode'])->name('embed_qr_code');
     Route::delete('/delete-qr/{uuid}', [ConfirmController::class, 'deleteQRCode'])->name('delete_qr_code');
+
+    // Superadmin Registration & User Management Routes
+    Route::get('/register-new', [App\Http\Controllers\RegistrationController::class, 'index'])->name('register.new')->middleware('role:superadmin');
+    Route::post('/register-new', [App\Http\Controllers\RegistrationController::class, 'store'])->name('register.new.store')->middleware('role:superadmin');
+    Route::get('/registration-success', [App\Http\Controllers\RegistrationController::class, 'success'])->name('registration.success')->middleware('role:superadmin');
+    Route::get('/manage-users', [App\Http\Controllers\UserManagementController::class, 'index'])->name('users.manage')->middleware('role:superadmin');
+    Route::get('/users/{id}/edit', [App\Http\Controllers\UserManagementController::class, 'edit'])->name('users.edit')->middleware('role:superadmin');
+    Route::put('/users/{id}', [App\Http\Controllers\UserManagementController::class, 'update'])->name('users.update')->middleware('role:superadmin');
+    Route::delete('/users/{id}', [App\Http\Controllers\UserManagementController::class, 'destroy'])->name('users.destroy')->middleware('role:superadmin');
+    Route::get('/users/{id}/change-password', [App\Http\Controllers\UserManagementController::class, 'changePasswordForm'])->name('users.change.password.form')->middleware('role:superadmin');
+    Route::put('/users/{id}/change-password', [App\Http\Controllers\UserManagementController::class, 'changePassword'])->name('users.change.password')->middleware('role:superadmin');
 });
 
 // QR Verification Routes (Public Access)
