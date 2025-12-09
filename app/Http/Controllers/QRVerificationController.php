@@ -87,10 +87,17 @@ class QRVerificationController extends Controller
             // Don't mark as used - QR codes can be scanned multiple times
             // for document verification purposes
 
+            // Jika QR untuk ketua_tuk, gunakan tanggal asesmen dari field jabatan_kerja
+            if ($qrCode->type === 'ketua_tuk' && $qrCode->verification && !empty($qrCode->verification->jabatan_kerja)) {
+                $scannedAt = \Carbon\Carbon::parse($qrCode->verification->jabatan_kerja);
+            } else {
+                $scannedAt = $qrCode->verification ? $qrCode->verification->created_at : now();
+            }
+
             return view('qr.success', [
                 'qrCode' => $qrCode,
                 'verification' => $qrCode->verification,
-                'scannedAt' => $qrCode->verification ? $qrCode->verification->created_at : now()
+                'scannedAt' => $scannedAt
             ]);
 
         } catch (\Exception $e) {

@@ -32,6 +32,77 @@ class FileController extends Controller
     // Normalisasi agar backslash Windows jadi slash
     return str_replace(['\\', '//'], '/', $fullPath);
 }
+
+/**
+ * Safely delete a file with proper error handling for shared hosting
+ * @param string $filePath
+ * @return bool
+ */
+private function safeUnlink(string $filePath): bool
+{
+    // Normalize path untuk cross-platform
+    $filePath = str_replace('\\', '/', $filePath);
+
+    // Log untuk debugging
+    \Log::info('Attempting to delete file: ' . $filePath);
+
+    // Check if file exists
+    if (!file_exists($filePath)) {
+        \Log::info('File does not exist, skipping deletion');
+        return true; // Return true jika file tidak ada (tidak ada yang dihapus)
+    }
+
+    // Try to delete with error suppression
+    $result = @unlink($filePath);
+
+    if (!$result) {
+        \Log::error('Failed to delete file: ' . $filePath . ' - Error: ' . error_get_last()['message'] ?? 'Unknown error');
+        return false;
+    }
+
+    \Log::info('Successfully deleted file: ' . $filePath);
+    return true;
+}
+
+/**
+ * Create temporary file with custom directory for shared hosting
+ * @param string $prefix
+ * @param string $suffix
+ * @return string
+ */
+private function createTempFile(string $prefix = '', string $suffix = ''): string
+{
+    // Try system temp directory first
+    $tempDir = sys_get_temp_dir();
+
+    // Check if writable
+    if (!is_writable($tempDir)) {
+        // Fallback to storage directory
+        $tempDir = storage_path('app/temp');
+
+        // Create if doesn't exist
+        if (!file_exists($tempDir)) {
+            @mkdir($tempDir, 0755, true);
+        }
+
+        // Check if storage temp dir is writable
+        if (!is_writable($tempDir)) {
+            // Fallback to public temp directory
+            $tempDir = public_path('temp');
+
+            if (!file_exists($tempDir)) {
+                @mkdir($tempDir, 0755, true);
+            }
+        }
+    }
+
+    // Generate unique filename
+    $filename = uniqid($prefix, true) . $suffix;
+    $filepath = $tempDir . '/' . $filename;
+
+    // Normalize path
+    return str_replace('\\', '/', $filepath);
+}
     public function index()
     {
         if (auth()->check()) {
@@ -953,8 +1024,8 @@ class FileController extends Controller
 
         $link_file = Storage::disk('public')->url('tuk-paperless/' . \Carbon\Carbon::parse($verification->created_at)->format('Y-m-d') . '/' . strtoupper($verification->tuk) . '/' . rawurlencode($verification->link));
 
-        unlink($tempFpdiPath);
-        unlink($tempFinalPdfPath);
+        $this->safeUnlink($tempFpdiPath);
+        $this->safeUnlink($tempFinalPdfPath);
         return back()->with('success', "Berhasil konfirmasi TUK! (<a target='blank' href='$link_file'>$link_file</a>)");
     }
 
@@ -1148,8 +1219,8 @@ class FileController extends Controller
 
         $link_file = Storage::disk('public')->url('tuk-paperless/' . \Carbon\Carbon::parse($verification->created_at)->format('Y-m-d') . '/' . strtoupper($verification->tuk) . '/' . rawurlencode($verification->link));
 
-        unlink($tempFpdiPath);
-        unlink($tempFinalPdfPath);
+        $this->safeUnlink($tempFpdiPath);
+        $this->safeUnlink($tempFinalPdfPath);
         return back()->with('success', "Berhasil validasi TUK! (<a target='blank' href='$link_file'>$link_file</a>)");
     }
 
@@ -1337,8 +1408,8 @@ class FileController extends Controller
 
         $link_file = Storage::disk('public')->url('tuk-paperless/' . \Carbon\Carbon::parse($verification->created_at)->format('Y-m-d') . '/' . strtoupper($verification->tuk) . '/' . rawurlencode($verification->link));
 
-        unlink($tempFpdiPath);
-        unlink($tempFinalPdfPath);
+        $this->safeUnlink($tempFpdiPath);
+        $this->safeUnlink($tempFinalPdfPath);
         return back()->with('success', "Berhasil validasi TUK! (<a target='blank' href='$link_file'>$link_file</a>)");
     }
 
@@ -1595,9 +1666,10 @@ class FileController extends Controller
             'validatorlist' => $verifikator2 !== null ? "•  $validator->Nama ($request->met1) - Validator"  : null,
             'validator' => $validator !== null ? "$validator->Nama ($request->met1)" : null,
             'memutuskan' => "$request->tuk sebagai TUK Sewaktu Terverifikasi.",
-            'penanggungjawab' => "$request->ketua sebagai Penanggungjawab $request->tuk.",
+            'penanggungjawab' => "$request->ketua_tuk sebagai Penanggungjawab $request->tuk.",
             'admin' => "$request->admin sebagai admin $request->tuk.",
             'tanggal_uji' => "$day1 $month1 $year1",
+            'ketua' => $request->ketua_tuk,
         ];
 
         foreach ($skemaArray as $index => $skema) {
@@ -1718,7 +1790,7 @@ class FileController extends Controller
                 'metode_verif' => $request->metodeVerif,
                 'tanggal1' => $formattedTanggal1,
                 'verifikator1' => "$verifikator1->Nama ($request->asesor)",
-                'ketua' => $request->ketua,
+                'ketua' => $request->ketua_tuk,
                 'asesor' => $verifikator1->Nama,
                 'validator' => $validator !== null ? $validator->Nama : null,
             ];
@@ -1967,7 +2039,7 @@ class FileController extends Controller
                 'metode_verif' => $request->metodeVerif,
                 'tanggal1' => $formattedTanggal1,
                 'verifikator1' => "$verifikator1->Nama ($request->asesor)",
-                'ketua' => $request->ketua,
+                'ketua' => $request->ketua_tuk,
                 'asesor' => $verifikator1->Nama,
                 'validator' => $validator !== null ? $validator->Nama : null,
             ];
@@ -2197,7 +2269,7 @@ class FileController extends Controller
             'no4' => $request->nomor . '/LSP LPK GTK C.003-F/' . $monthRoman . '/' . date('Y'),
             'tanggal4' => $formattedTanggal4,
             'memutuskan' => "$request->tuk sebagai TUK $request->jenisTUK Terverifikasi.",
-            'penanggungjawab' => "$request->ketua sebagai Penanggungjawab $request->tuk.",
+            'penanggungjawab' => "$request->ketua_tuk sebagai Penanggungjawab $request->tuk.",
             'admin' => "$request->admin sebagai admin $request->tuk.",
             'tanggal_uji' => "$day1 $month1 $year1",
             'tuk' => $request->tuk,
@@ -2371,29 +2443,29 @@ class FileController extends Controller
             'tuk' => $request->tuk,
             'link' => $filename_verifikasi,
             'verificator' => $verifikator1->Nama,
-            'ketua_tuk' => $request->ketua,
+            'ketua' => $request->ketua_tuk,
             'validator' => $validator?->Nama,
             'filetype' => $jumlahSkema < 8 ? 2 : 1,
             'jenis_tuk' => $request->jenisTUK,
             'skema_observasi' => json_encode($skemaObservasi),
             'skema_portofolio' => json_encode($skemaPortofolio),
-            'jabatan_kerja' => '',
+            'jabatan_kerja' => $tanggal1->format('Y-m-d'), // Simpan tanggal asesmen untuk ketua_tuk QR
             'created_at' => $yesterday
         ]);
 
-        if (!empty($outputPath) && file_exists($outputPath)) unlink($outputPath);
-        if (!empty($tempFpdiPath) && file_exists($tempFpdiPath)) unlink($tempFpdiPath);
-        if (!empty($tempFinalPdfPath) && file_exists($tempFinalPdfPath)) unlink($tempFinalPdfPath);
+        if (!empty($outputPath)) $this->safeUnlink($outputPath);
+        if (!empty($tempFpdiPath)) $this->safeUnlink($tempFpdiPath);
+        if (!empty($tempFinalPdfPath)) $this->safeUnlink($tempFinalPdfPath);
 
         if (!empty($tempFinalObservasiPaths)) {
             foreach ($tempFinalObservasiPaths as $file) {
-                if (!empty($file) && file_exists($file)) unlink($file);
+                if (!empty($file)) $this->safeUnlink($file);
             }
         }
 
         if (!empty($tempFinalPortofolioPaths)) {
             foreach ($tempFinalPortofolioPaths as $file) {
-                if (!empty($file) && file_exists($file)) unlink($file);
+                if (!empty($file)) $this->safeUnlink($file);
             }
         }
         $link_file = Storage::disk('public')->url('tuk-paperless/' . $yesterday->format('Y-m-d') . "/" . strtoupper($request->tuk) . "/" . rawurlencode($filename_verifikasi));

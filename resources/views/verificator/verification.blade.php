@@ -83,7 +83,7 @@
                     <!-- Proyektor -->
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="proyektor" id="proyektor" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="proyektor" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
+                        <label for="proyektor" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">
                             Monitor / Proyektor
                         </label>
                     </div>
@@ -91,7 +91,7 @@
                     <!-- Laptop/Komputer -->
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="pc" id="pc" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="pc" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
+                        <label for="pc" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">
                             Laptop / Komputer Min. 1
                         </label>
                     </div>
@@ -99,7 +99,7 @@
                     <!-- Meja Asesor -->
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="mejaasesor" id="mejaasesor" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="mejaasesor" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
+                        <label for="mejaasesor" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">
                             Meja Dan Kursi Asesor
                         </label>
                     </div>
@@ -107,7 +107,7 @@
                     <!-- Meja Asesi -->
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="mejaasesi" id="mejaasesi" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="mejaasesi" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
+                        <label for="mejaasesi" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">
                             Meja Dan Kursi Asesi
                         </label>
                     </div>
@@ -115,7 +115,7 @@
                     <!-- Alat Komunikasi -->
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="komunikasi" id="komunikasi" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="komunikasi" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
+                        <label for="komunikasi" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">
                             Alat Komunikasi (HT/HP)
                         </label>
                     </div>
@@ -123,17 +123,17 @@
                     <!-- Alat Dokumentasi -->
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="dokumentasi" id="dokumentasi" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="dokumentasi" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">
+                        <label for="dokumentasi" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">
                             Alat Dokumentasi (HP/Kamera)
                         </label>
                     </div>
 
                     <!-- Pendingin Ruangan -->
                     <div class="lg:col-span-3">
-                        <label for="pendingin" class="block text-sm font-medium text-gray-700 mb-2">
+                        <label for="pendingin" class="block text-sm font-medium text-gray-300 mb-2">
                             Spesifikasi Pendingin Ruangan
                         </label>
-                        <select id="pendingin" name="pendingin" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#1F3A73] focus:border-transparent transition-all duration-200 text-gray-900">
+                        <select id="pendingin" name="pendingin" class="w-full px-4 py-3 border border-gray-700 rounded-lg focus:ring-2 focus:ring-[#1F3A73] focus:border-transparent transition-all duration-200 text-gray-900">
                             <option value="">Pilih spesifikasi pendingin</option>
                             <option value="1/2pk">1/2 PK</option>
                             <option value="3/4pk">3/4 PK</option>
@@ -157,37 +157,37 @@
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="pulpen" id="pulpen" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="pulpen" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Pulpen</label>
+                        <label for="pulpen" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Pulpen</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="pensil" id="pensil" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="pensil" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Pensil</label>
+                        <label for="pensil" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Pensil</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="tipex" id="tipex" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="tipex" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Correction Tape</label>
+                        <label for="tipex" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Correction Tape</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="penghapus" id="penghapus" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="penghapus" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Penghapus Pensil</label>
+                        <label for="penghapus" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Penghapus Pensil</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="spidol" id="spidol" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="spidol" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Spidol</label>
+                        <label for="spidol" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Spidol</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="penggaris" id="penggaris" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="penggaris" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Penggaris Min. 30cm</label>
+                        <label for="penggaris" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Penggaris Min. 30cm</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="hvs" id="hvs" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="hvs" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">HVS A4</label>
+                        <label for="hvs" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">HVS A4</label>
                     </div>
                 </div>
             </div>
@@ -204,22 +204,22 @@
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="apd" id="apd" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="apd" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">APD</label>
+                        <label for="apd" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">APD</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="apk" id="apk" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="apk" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">APK</label>
+                        <label for="apk" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">APK</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="p3k" id="p3k" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="p3k" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">P3K</label>
+                        <label for="p3k" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">P3K</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="rambu" id="rambu" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="rambu" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Rambu Keselamatan Kerja</label>
+                        <label for="rambu" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Rambu Keselamatan Kerja</label>
                     </div>
                 </div>
             </div>
@@ -247,200 +247,200 @@
                     <!-- Peralatan Ukur -->
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="theodolite" id="theodolite" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="theodolite" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Theodolite</label>
+                        <label for="theodolite" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Theodolite</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="meteran" id="meteran" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="meteran" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Meteran</label>
+                        <label for="meteran" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Meteran</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="waterpass" id="waterpass" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="waterpass" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Waterpass</label>
+                        <label for="waterpass" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Waterpass</label>
                     </div>
 
                     <!-- Software -->
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="autocad" id="autocad" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="autocad" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Autocad</label>
+                        <label for="autocad" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Autocad</label>
                     </div>
 
                     <!-- Peralatan Konstruksi -->
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="perancah" id="perancah" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="perancah" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Perancah</label>
+                        <label for="perancah" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Perancah</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="bouwplank" id="bouwplank" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="bouwplank" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Bouwplank</label>
+                        <label for="bouwplank" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Bouwplank</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="patok" id="patok" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="patok" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Patok / Bench Mark</label>
+                        <label for="patok" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Patok / Bench Mark</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="jidar" id="jidar" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="jidar" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Jidar</label>
+                        <label for="jidar" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Jidar</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="bandul" id="bandul" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="bandul" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Lot / Bandul</label>
+                        <label for="bandul" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Lot / Bandul</label>
                     </div>
 
                     <!-- Peralatan Tangan -->
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="palu_karet" id="palu_karet" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="palu_karet" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Palu Karet</label>
+                        <label for="palu_karet" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Palu Karet</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="palu_besi" id="palu_besi" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="palu_besi" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Palu Besi</label>
+                        <label for="palu_besi" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Palu Besi</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="tang_jepit" id="tang_jepit" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="tang_jepit" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Tang Jepit</label>
+                        <label for="tang_jepit" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Tang Jepit</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="tang_potong" id="tang_potong" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="tang_potong" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Tang Potong</label>
+                        <label for="tang_potong" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Tang Potong</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="gergaji_kayu" id="gergaji_kayu" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="gergaji_kayu" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Gergaji Kayu</label>
+                        <label for="gergaji_kayu" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Gergaji Kayu</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="gergaji_besi" id="gergaji_besi" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="gergaji_besi" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Gergaji Besi</label>
+                        <label for="gergaji_besi" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Gergaji Besi</label>
                     </div>
 
                     <!-- Peralatan Listrik -->
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="gerinda" id="gerinda" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="gerinda" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Mesin Gerinda</label>
+                        <label for="gerinda" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Mesin Gerinda</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="pembengkok" id="pembengkok" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="pembengkok" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Pembengkok Besi</label>
+                        <label for="pembengkok" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Pembengkok Besi</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="mesin_bor" id="mesin_bor" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="mesin_bor" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Mesin Bor</label>
+                        <label for="mesin_bor" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Mesin Bor</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="mesin_serut" id="mesin_serut" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="mesin_serut" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Mesin Serut</label>
+                        <label for="mesin_serut" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Mesin Serut</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="mesin_gergaji" id="mesin_gergaji" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="mesin_gergaji" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Mesin Gergaji</label>
+                        <label for="mesin_gergaji" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Mesin Gergaji</label>
                     </div>
 
                     <!-- Peralatan Kayu -->
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="pahat" id="pahat" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="pahat" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Pahat Kayu</label>
+                        <label for="pahat" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Pahat Kayu</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="obeng" id="obeng" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="obeng" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Obeng</label>
+                        <label for="obeng" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Obeng</label>
                     </div>
 
                     <!-- Peralatan Tanah -->
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="cangkul" id="cangkul" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="cangkul" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Cangkul / Sekop</label>
+                        <label for="cangkul" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Cangkul / Sekop</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="sendok_semen" id="sendok_semen" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="sendok_semen" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Sendok Semen</label>
+                        <label for="sendok_semen" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Sendok Semen</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="ember" id="ember" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="ember" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Ember</label>
+                        <label for="ember" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Ember</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="pengerik" id="pengerik" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="pengerik" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Alat Pengerik / Kape</label>
+                        <label for="pengerik" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Alat Pengerik / Kape</label>
                     </div>
 
                     <!-- Peralatan Cat -->
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="roll_cat" id="roll_cat" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="roll_cat" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Kuas Roll Cat</label>
+                        <label for="roll_cat" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Kuas Roll Cat</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="cat" id="cat" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="cat" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Cat</label>
+                        <label for="cat" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Cat</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="kuas_cat" id="kuas_cat" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="kuas_cat" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Kuas Cat</label>
+                        <label for="kuas_cat" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Kuas Cat</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="nampan" id="nampan" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="nampan" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Nampan Cat</label>
+                        <label for="nampan" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Nampan Cat</label>
                     </div>
 
                     <!-- Lain-lain -->
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="benang" id="benang" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="benang" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Benang</label>
+                        <label for="benang" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Benang</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="paku" id="paku" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="paku" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Paku</label>
+                        <label for="paku" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Paku</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="ampelas" id="ampelas" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="ampelas" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Ampelas</label>
+                        <label for="ampelas" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Ampelas</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="triplek" id="triplek" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="triplek" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Triplek</label>
+                        <label for="triplek" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Triplek</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="lakban" id="lakban" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="lakban" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Masking Tape / Lakban</label>
+                        <label for="lakban" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Masking Tape / Lakban</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="dempul" id="dempul" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="dempul" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Dempul</label>
+                        <label for="dempul" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Dempul</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="papan_applicator" id="papan_applicator" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="papan_applicator" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Papan Applicator</label>
+                        <label for="papan_applicator" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Papan Applicator</label>
                     </div>
 
                     <div class="flex items-center p-3 rounded-lg border border-gray-700 hover:bg-gray-800/50 transition-colors">
                         <input name="penggaris_siku" id="penggaris_siku" type="checkbox" value="Yes" class="h-4 w-4 text-[#1F3A73] focus:ring-[#1F3A73] border-gray-300 rounded">
-                        <label for="penggaris_siku" class="ml-3 block text-sm font-medium text-gray-700 cursor-pointer">Penggaris Siku</label>
+                        <label for="penggaris_siku" class="ml-3 block text-sm font-medium text-gray-300 cursor-pointer">Penggaris Siku</label>
                     </div>
                 </div>
             </div>
@@ -509,6 +509,39 @@
             if (e.target === this) {
                 closeModal();
             }
+        });
+
+        // Make checkbox containers clickable
+        document.addEventListener('DOMContentLoaded', function() {
+            // Find ALL divs that contain checkboxes
+            const allDivs = document.querySelectorAll('div');
+
+            allDivs.forEach(function(div) {
+                const checkbox = div.querySelector('input[type="checkbox"]');
+                const label = div.querySelector('label');
+
+                if (checkbox && label) {
+                    // Make the entire div look clickable
+                    div.style.cursor = 'pointer';
+
+                    // Add click event to the entire div
+                    div.addEventListener('click', function(e) {
+                        // Don't toggle if clicking on:
+                        // 1. The checkbox itself
+                        // 2. The label text
+                        if (e.target.type === 'checkbox' || e.target.tagName === 'LABEL') {
+                            return;
+                        }
+
+                        // Toggle the checkbox
+                        checkbox.checked = !checkbox.checked;
+
+                        // Trigger change event
+                        const event = new Event('change', { bubbles: true });
+                        checkbox.dispatchEvent(event);
+                    });
+                }
+            });
         });
     </script>
 @endsection

@@ -321,6 +321,45 @@
             color: rgba(255, 255, 255, 0.5) !important;
         }
 
+        /* Force white text for all form inputs */
+        .sewaktu-form input,
+        .sewaktu-form textarea,
+        .sewaktu-form select {
+            color: #ffffff !important;
+            background-color: rgba(31, 58, 115, 0.3) !important;
+        }
+
+        /* White text when focused */
+        .sewaktu-form input:focus,
+        .sewaktu-form textarea:focus,
+        .sewaktu-form select:focus {
+            color: #ffffff !important;
+            background-color: rgba(31, 58, 115, 0.5) !important;
+        }
+
+        /* Also ensure text is white when field has value */
+        .sewaktu-form input:not(:placeholder-shown),
+        .sewaktu-form textarea:not(:placeholder-shown) {
+            color: #ffffff !important;
+        }
+
+        /* Override text-gray-900 class specifically */
+        .text-gray-900 {
+            color: #ffffff !important;
+        }
+
+        /* For input with datalist */
+        input[list] {
+            color: #ffffff !important;
+        }
+
+        input[list]:focus {
+            color: #ffffff !important;
+        }
+        input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):focus {
+    color: #ffffff !important;
+}
+
         .flatpickr-calendar {
             background: #1F3A73 !important;
             border: 1px solid rgba(255, 255, 255, 0.1) !important;
@@ -452,6 +491,33 @@
 
     <script>
         let skemaCount = 1;
+
+        // Force white text on all input fields
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply to all input, textarea, and select elements
+            const inputs = document.querySelectorAll('input, textarea, select');
+            inputs.forEach(function(input) {
+                // Add event listeners
+                input.addEventListener('input', function() {
+                    this.style.color = '#ffffff !important';
+                });
+
+                input.addEventListener('focus', function() {
+                    this.style.color = '#ffffff !important';
+                    this.style.backgroundColor = 'rgba(31, 58, 115, 0.5)';
+                });
+
+                input.addEventListener('blur', function() {
+                    if (this.value) {
+                        this.style.color = '#ffffff !important';
+                    }
+                });
+
+                // Apply initial styles
+                input.style.color = '#ffffff';
+                input.style.caretColor = '#ffffff'; // Cursor color
+            });
+        });
 
         // Add new skema fields
         document.getElementById('addSkemaBtn').addEventListener('click', function() {
