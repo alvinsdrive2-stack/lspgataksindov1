@@ -18,6 +18,12 @@ class UserManagementController extends Controller
         $users = User::orderBy('created_at', 'desc')->get();
         $roles = Role::all();
 
+        // Debug: Log all users
+        \Log::info('All users in manage page:');
+        foreach ($users as $user) {
+            \Log::info("User ID: {$user->id}, Name: {$user->name}, Role: {$user->role}");
+        }
+
         return view('auth.manage-users', compact('users', 'roles'));
     }
 
@@ -29,9 +35,17 @@ class UserManagementController extends Controller
         $user = User::findOrFail($id);
         $roles = Role::all();
 
-        // Prevent editing superadmin unless the current user is also superadmin
-        if ($user->role === 'superadmin' && auth()->user()->role !== 'superadmin') {
-            abort(403, 'Unauthorized access');
+        // Debug logging
+        \Log::info('Edit user accessed:', [
+            'editing_user_id' => $id,
+            'editing_user_role' => $user->role,
+            'current_user_id' => auth()->id(),
+            'current_user_role' => auth()->user()->role
+        ]);
+
+        // Only superadmin can edit users
+        if (auth()->user()->role !== 'superadmin') {
+            abort(403, 'Unauthorized access - Only superadmin can edit users. Your role: ' . auth()->user()->role);
         }
 
         return view('auth.edit-user', compact('user', 'roles'));
@@ -44,19 +58,38 @@ class UserManagementController extends Controller
     {
         $user = User::findOrFail($id);
 
-        // Prevent editing superadmin unless the current user is also superadmin
-        if ($user->role === 'superadmin' && auth()->user()->role !== 'superadmin') {
-            abort(403, 'Unauthorized access');
+        // Debug logging
+        \Log::info('Update user attempt:', [
+            'updating_user_id' => $id,
+            'updating_user_role' => $user->role,
+            'current_user_id' => auth()->id(),
+            'current_user_role' => auth()->user()->role,
+            'request_data' => $request->all()
+        ]);
+
+        // Only superadmin can edit users
+        if (auth()->user()->role !== 'superadmin') {
+            abort(403, 'Unauthorized access - Only superadmin can edit users. Your role: ' . auth()->user()->role);
         }
 
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,'.$id,
-            'role' => 'required|string|exists:roles,role',
-            'password' => 'nullable|min:6',
-            'nama_tuk' => 'nullable|string|max:255',
-            'notel' => 'nullable|string|max:20',
-        ]);
+        try {
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users,email,'.$id,
+                'role' => 'required|string|exists:roles,role',
+                'password' => 'nullable|min:6',
+                'nama_tuk' => 'nullable|string|max:255',
+                'notel' => 'nullable|string|max:20',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            \Log::error('Validation failed:', [
+                'errors' => $e->errors(),
+                'request_data' => $request->all(),
+                'user_id' => $id,
+                'user_role' => $user->role
+            ]);
+            throw $e;
+        }
 
         $updateData = [
             'name' => $request->name,
@@ -108,9 +141,9 @@ class UserManagementController extends Controller
     {
         $user = User::findOrFail($id);
 
-        // Prevent changing superadmin password unless the current user is also superadmin
-        if ($user->role === 'superadmin' && auth()->user()->role !== 'superadmin') {
-            abort(403, 'Unauthorized access');
+        // Only superadmin can change passwords
+        if (auth()->user()->role !== 'superadmin') {
+            abort(403, 'Unauthorized access - Only superadmin can change passwords');
         }
 
         return view('auth.change-password', compact('user'));
@@ -127,9 +160,9 @@ class UserManagementController extends Controller
 
         $user = User::findOrFail($id);
 
-        // Prevent changing superadmin password unless the current user is also superadmin
-        if ($user->role === 'superadmin' && auth()->user()->role !== 'superadmin') {
-            abort(403, 'Unauthorized access');
+        // Only superadmin can change passwords
+        if (auth()->user()->role !== 'superadmin') {
+            abort(403, 'Unauthorized access - Only superadmin can change passwords');
         }
 
         $user->update([

@@ -1597,7 +1597,7 @@ private function createTempFile(string $prefix = '', string $suffix = ''): strin
         $year4 = $currentDate->format('Y');
         $formattedTanggal4 = "Jakarta, $day4 $month4 $year4";
 
-        $monthRoman = $romanMonths[date('n')];
+        $monthRoman = $romanMonths[$currentDate->format('n')];
 
         $maxAlamat1Length = 62;
 
